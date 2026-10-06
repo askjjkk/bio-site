@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>askjjkk | Cyber Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-color: #050505;
+            --text-main: #ffffff;
+            --text-muted: #a0a0a0;
+            --accent-neon: rgba(255, 255, 255, 0.8);
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        .glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+        }
+
+        nav {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 1200px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            z-index: 1000;
+            border-radius: 100px;
+        }
+
+        .logo {
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: lowercase;
+            color: var(--text-muted);
+            text-shadow: 0 0 10px rgba(255,255,255,0.2);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--text-main);
+            text-shadow: 0 0 10px var(--accent-neon);
+        }
+
+        .burger {
+            display: none;
+            cursor: pointer;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .burger div {
+            width: 25px;
+            height: 2px;
+            background: var(--text-main);
+            transition: var(--transition);
+        }
+
+        section {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        #home {
+            min-height: 85vh;
+            padding-top: 120px;
+            padding-bottom: 40px;
+        }
+
+        .hero-content {
+            text-align: center;
+            position: relative;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(180deg, #fff 0%, #777 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 40px rgba(255,255,255,0.1);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+        }
+
+        .btn {
+            padding: 15px 35px;
+            border: 1px solid var(--glass-border);
+            background: rgba(255,255,255,0.05);
+            color: var(--text-main);
+            font-family: inherit;
+            font-size: 1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background: rgba(255,255,255,0.1);
+            box-shadow: 0 0 20px rgba(255,255,255,0.2);
+            transform: translateY(-3px);
+        }
+
+        .player-widget {
+            margin: 40px auto 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 10px 20px;
+            border-radius: 50px;
+            width: max-content;
+            max-width: 100%;
+        }
+
+        .cover-art {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #333;
+            object-fit: cover;
+            animation: spin 10s linear infinite;
+            animation-play-state: paused;
+        }
+
+        .playing .cover-art {
+            animation-play-state: running;
+        }
+
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        .track-info {
+            text-align: left;
+            overflow: hidden;
+        }
+
+        .track-name { font-size: 0.9rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .artist-name { font-size: 0.7rem; color: var(--text-muted); }
+
+        .play-btn {
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .play-btn:hover { text-shadow: 0 0 10px #fff; transform: scale(1.1); }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            width: 100%;
+        }
+
+        .info-card {
+            padding: 30px;
+        }
+
+        .info-card h2 { margin-bottom: 20px; font-size: 2rem; }
+        
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .skill-tag {
+            padding: 8px 16px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .skill-tag:hover {
+            background: rgba(255,255,255,0.15);
+            border-color: rgba(255,255,255,0.3);
+        }
+
+        .skill-tag.learning {
+            border-style: dashed;
+            color: var(--text-muted);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            width: 100%;
+            margin-top: 25px;
+        }
+
+        .project-card {
+            padding: 30px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(255,255,255,0.2);
+            box-shadow: 0 10px 30px rgba(255,255,255,0.05);
+        }
+
+        .project-card h3 { font-size: 1.5rem; margin-bottom: 15px; }
+        .project-card p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px; }
+
+        .contact-wrapper {
+            max-width: 600px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .social-links {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .social-btn {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 18px 25px;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 15px;
+            transition: var(--transition);
+        }
+
+        .social-btn:hover { 
+            background: rgba(255,255,255,0.08); 
+            transform: translateY(-3px);
+            border-color: rgba(255,255,255,0.2);
+        }
+
+        .hidden {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            section {
+                padding: 40px 15px;
+            }
+
+            #home {
+                min-height: 80vh;
+                padding-top: 100px;
+            }
+
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                flex-direction: column;
+                background: rgba(5, 5, 5, 0.95);
+                backdrop-filter: blur(20px);
+                padding: 20px;
+                border-radius: 20px;
+                border: 1px solid var(--glass-border);
+                clip-path: circle(0% at top right);
+                transition: all 0.5s ease-in-out;
+            }
+
+            .nav-links.active { clip-path: circle(150% at top right); }
+            .burger { display: flex; }
+            .about-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="glass">
+        <div class="logo">bio</div>
+        <div class="nav-links">
+            <a href="#about">Обо мне</a>
+            <a href="#projects">Проекты</a>
+            <a href="#contact">Связь</a>
+        </div>
+        <div class="burger" id="burger">
+            <div class="line1"></div>
+            <div class="line2"></div>
+            <div class="line3"></div>
+        </div>
+    </nav>
+
+    <section id="home">
+        <div class="hero-content hidden">
+            <h1>askjjkk</h1>
+            <p class="subtitle">Студент ИБ 1-го курса | Full-Stack & Bot Developer</p>
+            <a href="#projects" class="btn">Смотреть работы</a>
+            
+            <div class="player-widget glass" id="player">
+                <img src="cover.jpg" alt="Cover" class="cover-art" onerror="this.src='https://via.placeholder.com/40/111/fff?text=♫'">
+                <div class="track-info">
+                    <div class="track-name">ванна, красный пол</div>
+                    <div class="artist-name">капсайз</div>
+                </div>
+                <button class="play-btn" id="playBtn"><i class="fas fa-play"></i></button>
+                <audio id="audioElement" src="Ванна, красный пол.mp3"></audio>
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="about-grid">
+            <div class="info-card glass hidden">
+                <h2>System.Info</h2>
+                <p>Привет! Я живу в России, учусь на первом курсе Информационной Безопасности и уверенно двигаюсь в IT. Пишу код, создаю плагины для Minecraft и постоянно прокачиваю свои навыки в разработке.</p>
+                <br>
+                <p><i class="fas fa-birthday-cake" style="color: var(--text-muted)"></i> Дата рождения: <b>30 сентября</b></p>
+            </div>
+            
+            <div class="info-card glass hidden">
+                <h2>Tech Stack</h2>
+                <p>Языки и инструменты, которые я использую для создания сайтов, ботов и плагинов:</p>
+                <div class="skills-container">
+                    <span class="skill-tag">Python</span>
+                    <span class="skill-tag">Java</span>
+                    <span class="skill-tag">JavaScript</span>
+                    <span class="skill-tag">HTML/CSS</span>
+                    <span class="skill-tag learning">C# (В процессе изучения)</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <h2 class="hidden" style="font-size: 2.5rem; margin-bottom: 15px;">[Проекты]</h2>
+        <p class="hidden" style="color: var(--text-muted);">Больше проектов в моем ТГ-канале: <a href="https://t.me/askjjkkproject" target="_blank" style="color:#fff;">@askjjkkproject</a></p>
+        
+        <div class="projects-grid">
+            <div class="project-card glass hidden">
+                <h3>TG Security Header Auditor Bot</h3>
+                <p>Telegram-бот для автоматизированного аудита веб-сайтов на соответствие базовым стандартам безопасности OWASP. Проверяет наличие ключевых заголовков HSTS, CSP и других.</p>
+                <div class="skills-container" style="margin-top: 10px;">
+                    <span class="skill-tag" style="font-size: 0.7rem;">Python 3.12</span>
+                    <span class="skill-tag" style="font-size: 0.7rem;">aiogram 3.x</span>
+                    <span class="skill-tag" style="font-size: 0.7rem;">SQLite</span>
+                </div>
+            </div>
+
+            <div class="project-card glass hidden">
+                <h3>Cyber Portfolio</h3>
+                <p>Этот самый сайт. Разработан как SPA с использованием современных трендов дизайна: Glassmorphism, неоновые акценты, микроинтеракции на чистом JS.</p>
+                <div class="skills-container" style="margin-top: 10px;">
+                    <span class="skill-tag" style="font-size: 0.7rem;">HTML/CSS</span>
+                    <span class="skill-tag" style="font-size: 0.7rem;">JavaScript</span>
+                    <span class="skill-tag" style="font-size: 0.7rem;">UI/UX</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2 class="hidden" style="font-size: 2.5rem; margin-bottom: 25px; text-align: center; width: 100%;">[Контакты]</h2>
+        
+        <div class="contact-wrapper hidden">
+            <div class="social-links">
+                <a href="https://t.me/askjjkk" target="_blank" class="social-btn glass">
+                    <i class="fab fa-telegram fa-2x"></i>
+                    <div>
+                        <strong>Telegram</strong>
+                        <div style="font-size: 0.8rem; color: var(--text-muted)">@askjjkk</div>
+                    </div>
+                </a>
+                <a href="https://github.com/askjjkk" target="_blank" class="social-btn glass">
+                    <i class="fab fa-github fa-2x"></i>
+                    <div>
+                        <strong>GitHub</strong>
+                        <div style="font-size: 0.8rem; color: var(--text-muted)">github.com/askjjkk</div>
+                    </div>
+                </a>
+                <a href="http://t.me/anonaskbot?start=ugmw30gzophhh6mi" target="_blank" class="social-btn glass">
+                    <i class="fas fa-user-secret fa-2x"></i>
+                    <div>
+                        <strong>Анонимка</strong>
+                        <div style="font-size: 0.8rem; color: var(--text-muted)">Оставить тайное сообщение</div>
+                    </div>
+                </a>
+                <a href="https://t.tb.ru/pm_short/8Xs0wSYDe9V" target="_blank" class="social-btn glass" style="border-color: rgba(255,100,100,0.3);">
+                    <i class="fas fa-coffee fa-2x" style="color: #ff6b6b;"></i>
+                    <div>
+                        <strong>Поддержать автора</strong>
+                        <div style="font-size: 0.8rem; color: var(--text-muted)">На покушать</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const burger = document.getElementById('burger');
+        const navLinks = document.querySelector('.nav-links');
+
+        burger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            burger.classList.toggle('toggle');
+        });
+
+        const playBtn = document.getElementById('playBtn');
+        const audio = document.getElementById('audioElement');
+        const player = document.getElementById('player');
+        let isPlaying = false;
+
+        playBtn.addEventListener('click', () => {
+            if (isPlaying) {
+                audio.pause();
+                playBtn.innerHTML = '<i class="fas fa-play"></i>';
+                player.classList.remove('playing');
+            } else {
+                audio.play().then(() => {
+                    playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                    player.classList.add('playing');
+                }).catch(e => {
+                    console.log("Ошибка воспроизведения:", e);
+                    alert('Не удалось запустить трек. Убедись, что файл называется именно "Ванна, красный пол.mp3" и лежит в папке с сайтом.');
+                });
+            }
+            isPlaying = !isPlaying;
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        const hiddenElements = document.querySelectorAll('.hidden');
+        hiddenElements.forEach((el) => observer.observe(el));
+    </script>
+</body>
+</html>
